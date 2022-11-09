@@ -1,4 +1,4 @@
-from mediator import Request
+from mediatpy import Request
 from tests.my_response import MyResponse
 
 

@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 import pytest
 from assertpy import assert_that
 
-from mediator import (
+from mediatpy import (
     NoRequestHandlerFoundError,
     NotAnyNotificationHandlerFoundError,
     Notification,

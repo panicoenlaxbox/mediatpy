@@ -2,7 +2,7 @@ from typing import Awaitable, Callable
 
 from assertpy import assert_that
 
-from mediator import NotificationHandler, PipelineBehavior, RequestHandler
+from mediatpy import NotificationHandler, PipelineBehavior, RequestHandler
 from tests.create_mediator import create_mediator
 from tests.my_notification import MyNotification
 from tests.my_request import MyRequest

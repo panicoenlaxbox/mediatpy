@@ -1,4 +1,4 @@
-from mediator import Notification
+from mediatpy import Notification
 
 
 class MyNotification(Notification):

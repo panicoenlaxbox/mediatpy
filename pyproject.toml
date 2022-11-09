@@ -1,6 +1,6 @@
 [tool.black]
 line-length = 120
-target-version = ['py310']  # https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html?highlight=target-version#command-line-options
+target-version = ['py310']
 
 [tool.isort]
 multi_line_output = 3
@@ -9,6 +9,10 @@ force_grid_wrap = 0
 use_parentheses = true
 ensure_newline_before_comments = true
 line_length = 120
+
+[tool.flake8]
+max-line-length = 120
+use_class_attributes_order_strict_mode = true
 
 [tool.mypy]
 show_error_codes = true
@@ -31,3 +35,30 @@ omit = ["tests/*"]
 
 [tool.coverage.report]
 exclude_lines = ["pass"]
+
+[tool.poetry]
+name = "mediatpy"
+version = "0.1.0"
+description = "Mediator implementation in Python"
+authors = ["Sergio León <panicoenlaxbox@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^0.990"
+pytest = "^7.2.0"
+black = "^22.10.0"
+isort = "^5.10.1"
+flake8 = "^5.0.4"
+assertpy = "^1.1"
+pre-commit = "^2.20.0"
+flake8-class-attributes-order = "^0.1.3"
+pytest-asyncio = "^0.20.1"
+pytest-cov = "^4.0.0"
+flake8-pyproject = "^1.1.0.post0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

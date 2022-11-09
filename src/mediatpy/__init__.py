@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from functools import cache
-from typing import Awaitable, Callable, Coroutine, Generic, Type, TypeAlias, TypeVar, get_args
+from typing import Awaitable, Callable, Coroutine, Generic, Optional, Type, TypeAlias, TypeVar, get_args
 
 TResponse = TypeVar("TResponse")
 
@@ -62,9 +62,9 @@ class NotAnyNotificationHandlerFoundError(Exception):
 class Mediator:
     def __init__(
         self,
-        request_handler_factory: Callable[[Type[RequestHandler]], RequestHandler] = None,
-        pipeline_behavior_factory: Callable[[Type[PipelineBehavior]], PipelineBehavior] = None,
-        notification_handler_factory: Callable[[Type[NotificationHandler]], NotificationHandler] = None,
+        request_handler_factory: Optional[Callable[[Type[RequestHandler]], RequestHandler]] = None,
+        pipeline_behavior_factory: Optional[Callable[[Type[PipelineBehavior]], PipelineBehavior]] = None,
+        notification_handler_factory: Optional[Callable[[Type[NotificationHandler]], NotificationHandler]] = None,
         raise_error_if_not_any_registered_notification_handler: bool = False,
     ) -> None:
         self._request_handler_factory = (
@@ -98,6 +98,14 @@ class Mediator:
     def _default_notification_handler_factory(notification_handler: Type[NotificationHandler]) -> NotificationHandler:
         return notification_handler()
 
+    @staticmethod
+    def _get_request_type(handler: Handler) -> Type[Request]:
+        return get_args(handler.__orig_bases__[0])[0]  # type: ignore
+
+    @staticmethod
+    def _get_notification_type(notification_handler: Type[NotificationHandler]) -> Type[Notification]:
+        return get_args(notification_handler.__orig_bases__[0])[0]  # type: ignore
+
     def request_handler(self, request_handler: Type[RequestHandler]) -> None:
         self.register_request_handler(request_handler)
 
@@ -106,14 +114,6 @@ class Mediator:
 
     def notification_handler(self, notification_handler: Type[NotificationHandler]) -> None:
         self.register_notification_handler(notification_handler)
-
-    @staticmethod
-    def _get_request_type(handler: Handler) -> Type[Request]:
-        return get_args(handler.__orig_bases__[0])[0]  # type: ignore
-
-    @staticmethod
-    def _get_notification_type(notification_handler: Type[NotificationHandler]) -> Type[Notification]:
-        return get_args(notification_handler.__orig_bases__[0])[0]  # type: ignore
 
     def register_request_handler(self, request_handler: Type[RequestHandler]) -> None:
         request = self._get_request_type(request_handler)

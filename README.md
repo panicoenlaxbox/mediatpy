@@ -57,7 +57,7 @@ mediator.register_request_handler(MyRequestHandler)
 ```python
 import asyncio
 
-from mediator import Request, RequestHandler, Mediator
+from mediatpy import Request, RequestHandler, Mediator
 
 
 class MyResponse:
@@ -92,7 +92,7 @@ If you prefer, you can use a python decorator to associate in a more declarative
 ```python
 import asyncio
 
-from mediator import Request, RequestHandler, Mediator
+from mediatpy import Request, RequestHandler, Mediator
 
 
 class MyResponse:
@@ -138,7 +138,7 @@ You can create a pipeline where both, before and after `RequestHandler` executio
 import asyncio
 from typing import Callable, Awaitable
 
-from mediator import Request, RequestHandler, Mediator, PipelineBehavior
+from mediatpy import Request, RequestHandler, Mediator, PipelineBehavior
 
 
 class MyResponse:
@@ -231,7 +231,7 @@ As in the case of `PipelineBehavior`, you can use the subtype to handle subtypes
 ```python
 import asyncio
 
-from mediator import Mediator, Notification, NotificationHandler
+from mediatpy import Mediator, Notification, NotificationHandler
 
 
 class MyNotification(Notification):
@@ -277,7 +277,7 @@ MyGenericNotificationHandler
 import asyncio
 from typing import Type
 
-from mediator import Mediator, Notification, NotificationHandler
+from mediatpy import Mediator, Notification, NotificationHandler
 
 
 class MyNotification(Notification):
