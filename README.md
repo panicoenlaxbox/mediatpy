@@ -8,7 +8,7 @@
 
 This library is "almost" a port of [Mediatr](https://github.com/jbogard/MediatR).
 
-I say "almost" because along the way, I've made some decisions that seemed right to me.
+> I say "almost" because along the way, I've made some decisions that seemed right to me.
 
 # Usage
 
