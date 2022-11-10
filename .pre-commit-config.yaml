@@ -27,3 +27,8 @@ repos:
     hooks:
     -   id: mypy
         verbose: true
+-   repo: https://github.com/PyCQA/bandit
+    rev: 1.7.4
+    hooks:
+    -   id: bandit
+        verbose: true
