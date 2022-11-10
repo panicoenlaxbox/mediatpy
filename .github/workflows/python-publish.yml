@@ -45,9 +45,29 @@ jobs:
     - name: bandit
       run: |
         poetry run bandit .
-    - name: test
+    - name: Tests
       run: |
         poetry run pytest
     - name: build
       run: |
         poetry build -f wheel
+    - name: version
+      id: version
+      run: |
+        $version = poetry version --short
+        echo $version
+        echo "::set-output name=version::$version"
+      shell: pwsh
+    - name: Version tag
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: `refs/tags/${process.env.PUBLISHED_VERSION}`,
+            sha: context.sha
+          })
+      env:
+        PUBLISHED_VERSION: ${{ steps.version.outputs.version }}
+      continue-on-error: true
