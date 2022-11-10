@@ -45,3 +45,9 @@ jobs:
     - name: bandit
       run: |
         poetry run bandit .
+    - name: test
+      run: |
+        poetry run pytest
+    - name: build
+      run: |
+        poetry build -f wheel
