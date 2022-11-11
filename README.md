@@ -3,7 +3,9 @@
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1)](https://pycqa.github.io/isort/)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
-![Twitter Follow](https://img.shields.io/twitter/follow/panicoenlaxbox?style=social)
+<a href="https://twitter.com/intent/follow?screen_name=panicoenlaxbox">
+    <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/panicoenlaxbox?style=social">
+</a>
 
 # Introduction
 
