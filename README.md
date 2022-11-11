@@ -126,7 +126,7 @@ if __name__ == '__main__':
 
 The library has been created using [generics](https://docs.python.org/3.10/library/typing.html#building-generic-types) and using [mypy](http://mypy-lang.org/) to validate types. This means, that you will have autocomplete in editors that support it.
 
-![image](docs/IntelliSense.png)
+![image](https://raw.githubusercontent.com/panicoenlaxbox/mediatpy/main/docs/IntelliSense.png)
 
 ## Pipeline Behavior
 
