@@ -27,6 +27,8 @@ jobs:
         source .venv/bin/activate
         pre-commit install
         pre-commit run --all-files --verbose
+      env:
+        SKIP: poetry-lock
     - name: pytest
       run: |
         poetry run pytest --cov --cov-report=lcov:coverage/lcov.info --verbose
