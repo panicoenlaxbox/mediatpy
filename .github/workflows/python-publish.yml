@@ -19,52 +19,24 @@ jobs:
         python -m pip install --upgrade pip
     - name: Install Poetry
       uses: snok/install-poetry@v1
-    - run: poetry install --no-interaction --no-root
-    - name: check
+      with:
+        virtualenvs-in-project: true
+    - run: poetry install --no-interaction --no-root --verbose
+    - name: pre-commit
       run: |
-        poetry check
-    - name: lock
-      run: |
-        poetry lock
-    - name: isort
-      run: |
-        poetry run isort . --check-only --diff
-    - name: black
-      run: |
-        poetry run black . --check
-    - name: flake8
-      run: |
-        poetry run flake8p
-    - name: mypy
-      run: |
-        poetry run mypy .
-    - name: bandit
-      run: |
-        poetry run bandit .
+        source .venv/bin/activate
+        pre-commit install
+        pre-commit run --all-files --verbose
     - name: pytest
       run: |
-        poetry run pytest
+        poetry run pytest --cov --cov-report=lcov:coverage/lcov.info --verbose
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: build
-      run: |
-        poetry build -f wheel
-    - name: version
-      id: version
-      run: |
-        echo "::set-output name=version::$(poetry version --short)"
-      shell: pwsh
+      run: |      
+        poetry build --verbose
     - name: publish
       run: |
-        poetry publish --username __token__ --password ${{ secrets.PYPI_API_TOKEN }} --skip-existing
-    - name: tag
-      uses: actions/github-script@v6
-      with:
-        script: |
-          github.rest.git.createRef({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            ref: `refs/tags/${process.env.PUBLISHED_VERSION}`,
-            sha: context.sha
-          })
-      env:
-        PUBLISHED_VERSION: ${{ steps.version.outputs.version }}
-      continue-on-error: true
+        poetry publish --username __token__ --password ${{ secrets.PYPI_API_TOKEN }} --skip-existing --verbose
