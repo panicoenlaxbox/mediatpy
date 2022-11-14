@@ -12,6 +12,7 @@ line_length = 120
 
 [tool.flake8]
 max-line-length = 120
+max-doc-length = 140
 use_class_attributes_order_strict_mode = true
 
 [tool.mypy]
@@ -65,6 +66,8 @@ pytest-asyncio = "^0.20.1"
 pytest-cov = "^4.0.0"
 flake8-pyproject = "^1.1.0.post0"
 bandit = "^1.7.4"
+sphinx = "^5.3.0"
+sphinx-autodoc-typehints = "^1.19.5"
 
 [build-system]
 requires = ["poetry-core"]
