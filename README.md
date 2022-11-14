@@ -5,6 +5,7 @@
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 ![Upload Python Package](https://github.com/panicoenlaxbox/mediatpy/actions/workflows/python-publish.yml/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/panicoenlaxbox/mediatpy/badge.svg?branch=main)](https://coveralls.io/github/panicoenlaxbox/mediatpy?branch=main)
+[![Documentation Status](https://readthedocs.org/projects/mediatpy/badge/?version=latest)](https://mediatpy.readthedocs.io/en/latest/?badge=latest)
 <a href="https://twitter.com/intent/follow?screen_name=panicoenlaxbox">
     <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/panicoenlaxbox?style=social">
 </a>
@@ -14,6 +15,8 @@
 This library is "almost" a port of [Mediatr](https://github.com/jbogard/MediatR).
 
 > I say "almost" because along the way, I've made some decisions that seemed right to me.
+
+For more information and usage instructions, see the [documentation](https://mediatpy.readthedocs.io/en/latest/).
 
 # Usage
 
