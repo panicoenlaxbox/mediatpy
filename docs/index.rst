@@ -1,8 +1,3 @@
-.. mediatpy documentation master file, created by
-   sphinx-quickstart on Mon Nov 14 14:44:52 2022.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to mediatpy's documentation!
 ====================================
 
@@ -10,9 +5,13 @@ Welcome to mediatpy's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-.. automodule:: mediatpy
-   :members:
-   :undoc-members:
+   getting_started
+   repr
+   pipeline
+   notifications
+   dependency_injection
+   API <modules>
+
 
 Indices and tables
 ==================

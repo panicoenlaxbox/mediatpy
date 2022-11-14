@@ -275,7 +275,7 @@ MyGenericNotificationHandler
 
 ## Dependency Injection
 
-`Mediator` does not know anything about third-party dependency containers, but for easing its integration with them, it supplies optional parameters in its constructor that you can use to create (or maybe delegate) objects when they are needed.
+`Mediator` class does not know anything about third-party dependency containers, but for easing its integration with them, it supplies optional parameters in its constructor that you can use to create (or maybe delegate) objects when they are needed.
 
 ```python
 import asyncio

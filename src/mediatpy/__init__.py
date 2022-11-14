@@ -97,6 +97,12 @@ class Mediator:
     """
     Class to register handlers and coordinate their execution in response to arrivals of requests and notifications
 
+    All parameters are optional.
+
+    .. code-block:: python
+
+        my_mediator = Mediator()
+
     :param request_handler_factory: Custom :class:`RequestHandler` factory
     :param pipeline_behavior_factory: Custom :class:`PipelineBehavior` factory
     :param notification_handler_factory: Custom :class:`NotificationHandler` factory
@@ -153,6 +159,13 @@ class Mediator:
     def request_handler(self, request_handler: Type[RequestHandler]) -> None:
         """
         Decorator to register a :class:`RequestHandler`
+
+        .. code-block:: python
+
+            @my_mediator.request_handler
+            class MyRequestHandler(RequestHandler[MyRequest, MyResponse]):
+                async def handle(self, request: MyRequest) -> MyResponse:
+                    return MyResponse()
         """
         self.register_request_handler(request_handler)
 
@@ -171,6 +184,10 @@ class Mediator:
     def register_request_handler(self, request_handler: Type[RequestHandler]) -> None:
         """
         Manual registration of a :class:`RequestHandler`
+
+        .. code-block:: python
+
+            my_mediator.register_request_handler(MyRequestHandler)
         """
         request = self._get_request_type(request_handler)
         self._request_handlers[request] = request_handler
@@ -201,7 +218,7 @@ class Mediator:
         .. code-block:: python
 
             my_request = MyRequest()
-            await mediator.send(my_request)
+            await my_mediator.send(my_request)
         """
         if not type(request) in self._request_handlers:
             raise NoRequestHandlerFoundError(request)
@@ -222,7 +239,7 @@ class Mediator:
         .. code-block:: python
 
             my_notification = MyNotification()
-            await mediator.publish(my_notification)
+            await my_mediator.publish(my_notification)
         """
         notification_handlers = self._resolve_notification_handlers(notification)
         if not any(notification_handlers) and self._raise_error_if_not_any_registered_notification_handler:
