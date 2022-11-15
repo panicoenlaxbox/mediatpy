@@ -3,6 +3,15 @@ Notifications
 
 You can trigger a :class:`mediatpy.Notification` and it will be processed for any number of registered :class:`mediatpy.NotificationHandler`.
 
+By default, you can trigger a :class:`mediatpy.Notification` that isn't handled by any :class:`mediatpy.NotificationHandler`. If you want to raise and error if :class:`mediatpy.Notification` it's unhandled, use ``raise_error_if_not_any_registered_notification_handler`` parameter during the creation of :class:`mediatpy.Mediator` instance.
+
+By design, :class:`mediatpy.NotificationHandler` are not guaranteed to be executed in the order they are registered.
+
+As in the case of :class:`mediatpy.PipelineBehavior`, you can use the subtype to handle subtypes as well.
+
+Example
+-------
+
 .. code-block:: python
 
     import asyncio
@@ -11,7 +20,7 @@ You can trigger a :class:`mediatpy.Notification` and it will be processed for an
 
 
     class MyNotification(Notification):
-        ...
+        pass
 
 
     mediator = Mediator()

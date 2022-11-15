@@ -9,15 +9,17 @@ Request/Response
 .. code-block:: python
 
     class MyResponse:
-        ...
+        pass
 
     class MyRequest(Request[MyResponse]):
-        ...
+        pass
 
 In both the :class:`mediatpy.Request` and the :class:`mediatpy.Response` you can define any number of attributes.
 
 EndPoint
 --------
+
+Then, you must create a :class:`mediatpy.RequestHandler` to manage the :class:`mediatpy.Request` and return the expected :class:`mediatpy.Response`.
 
 .. code-block:: python
 
@@ -46,8 +48,8 @@ Decorator
         async def handle(self, request: MyRequest) -> MyResponse:
             return MyResponse()
 
-Full example
-------------
+Example
+-------
 
 .. code-block:: python
 
@@ -57,21 +59,21 @@ Full example
 
 
     class MyResponse:
-        ...
+        pass
 
 
     class MyRequest(Request[MyResponse]):
-        ...
+        pass
 
+    mediator = Mediator()
 
+    @mediator.request_handler
     class MyRequestHandler(RequestHandler[MyRequest, MyResponse]):
         async def handle(self, request: MyRequest) -> MyResponse:
             return MyResponse()
 
 
     async def main():
-        mediator = Mediator()
-        mediator.register_request_handler(MyRequestHandler)
         request = MyRequest()
         response = await mediator.send(request)
         assert isinstance(response, MyResponse)

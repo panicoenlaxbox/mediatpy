@@ -12,7 +12,7 @@ Dependency injection
 
 
     class MyNotification(Notification):
-        ...
+        pass
 
 
     def my_custom_notification_handler_factory(notification_handler: Type[NotificationHandler]) -> NotificationHandler:
@@ -36,39 +36,3 @@ Dependency injection
 
     if __name__ == '__main__':
         asyncio.run(main())
-
-    .. code-block:: python
-
-        import asyncio
-
-        from mediatpy import Mediator, Notification, NotificationHandler
-
-
-        class MyNotification(Notification):
-            ...
-
-
-        mediator = Mediator()
-
-
-        @mediator.register_notification_handler
-        class MyNotificationHandler(NotificationHandler[MyNotification]):
-            async def handle(self, notification: MyNotification) -> None:
-                print(self.__class__.__name__)
-
-
-        @mediator.register_notification_handler
-        class MyGenericNotificationHandler(NotificationHandler[Notification]):
-            async def handle(self, notification: Notification) -> None:
-                # You could use isinstance if you want...
-                if isinstance(notification, MyNotification):
-                    print(self.__class__.__name__)
-
-
-        async def main():
-            notification = MyNotification()
-            await mediator.publish(notification)
-
-
-        if __name__ == '__main__':
-            asyncio.run(main())

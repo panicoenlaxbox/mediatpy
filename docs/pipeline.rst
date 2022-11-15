@@ -1,10 +1,14 @@
 Pipeline
 ========
 
-An useful feature of mediatpy is that you can build a pipeline of chained behaviors that will be executed, both, before and after a request handler.
+An useful feature of *mediatpy* is that you can build a pipeline of chained :class:`mediatpy.PipelineBehavior` that will be executed, both, before and after a :class:`mediatpy.RequestHandler`.
 
-Usage
------
+You can define any number of :class:`mediatpy.PipelineBehavior` and even define some of them with a supertype to catch all of the executions of their subtypes. Moreover, you can be sure that the execution order of :class:`mediatpy.PipelineBehavior` will be the expected right.
+
+For example, ``MyGenericPipelineBehavior`` is defined before ``MyPipelineBehavior`` and it's using :class:`mediatpy.Request` instead of ``MyRequest`` in their definition, so it will be executed for :class:`mediatpy.Request` and for all their subtypes as ``MyRequest``.
+
+Example
+-------
 
 .. code-block:: python
 
