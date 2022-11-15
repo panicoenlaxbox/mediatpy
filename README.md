@@ -6,6 +6,7 @@
 ![Upload Python Package](https://github.com/panicoenlaxbox/mediatpy/actions/workflows/python-publish.yml/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/panicoenlaxbox/mediatpy/badge.svg?branch=main)](https://coveralls.io/github/panicoenlaxbox/mediatpy?branch=main)
 [![Documentation Status](https://readthedocs.org/projects/mediatpy/badge/?version=latest)](https://mediatpy.readthedocs.io/en/latest/?badge=latest)
+[![PyPI version](https://badge.fury.io/py/mediatpy.svg)](https://badge.fury.io/py/mediatpy)
 <a href="https://twitter.com/intent/follow?screen_name=panicoenlaxbox">
     <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/panicoenlaxbox?style=social">
 </a>

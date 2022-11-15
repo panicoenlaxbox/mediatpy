@@ -44,6 +44,7 @@ description = "Mediator implementation in Python"
 authors = ["Sergio León <panicoenlaxbox@gmail.com>"]
 readme = "README.md"
 repository = "https://github.com/panicoenlaxbox/mediatpy"
+documentation = "https://mediatpy.readthedocs.io/en/latest/"
 keywords = ["mediator"]
 packages = [{ include = "mediatpy", from = "src" }]
 classifiers = [
