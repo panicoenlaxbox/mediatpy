@@ -10,7 +10,7 @@
 
 # Introduction
 
-This library is a port of [Mediatr](https://github.com/jbogard/MediatR).
+This library is a port of [Mediatr](https://github.com/jbogard/MediatR) in Python.
 
 For more information and usage instructions, see the [documentation](https://mediatpy.readthedocs.io/en/latest/).
 
