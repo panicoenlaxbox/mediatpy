@@ -1,7 +1,12 @@
+import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from functools import cache
 from typing import Awaitable, Callable, Coroutine, Generic, Optional, Type, TypeAlias, TypeVar, get_args
+
+# https://docs.python.org/3/howto/logging.html#library-config
+_logger = logging.getLogger(__name__)
+_logger.addHandler(logging.NullHandler())
 
 TResponse = TypeVar("TResponse")
 
@@ -220,6 +225,7 @@ class Mediator:
             my_request = MyRequest()
             await my_mediator.send(my_request)
         """
+        _logger.debug(f"Sending request {request}")
         if not type(request) in self._request_handlers:
             raise NoRequestHandlerFoundError(request)
         request_handler = self._create_request_handler(self._request_handlers[type(request)])
@@ -241,6 +247,7 @@ class Mediator:
             my_notification = MyNotification()
             await my_mediator.publish(my_notification)
         """
+        _logger.debug(f"Publishing notification {notification}")
         notification_handlers = self._resolve_notification_handlers(notification)
         if not any(notification_handlers) and self._raise_error_if_not_any_registered_notification_handler:
             raise NotAnyNotificationHandlerFoundError(notification)
