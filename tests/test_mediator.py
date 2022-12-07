@@ -13,10 +13,10 @@ from mediatpy import (
     Request,
     RequestHandler,
 )
-from tests.create_mediator import create_mediator
-from tests.my_notification import MyNotification
-from tests.my_request import MyRequest
-from tests.my_response import MyResponse
+from tests.test_data.create_mediator import create_mediator
+from tests.test_data.my_notification import MyNotification
+from tests.test_data.my_request import MyRequest
+from tests.test_data.my_response import MyResponse
 
 
 class MyRequestHandler(RequestHandler[MyRequest, MyResponse]):

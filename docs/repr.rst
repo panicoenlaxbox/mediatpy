@@ -16,6 +16,16 @@ Request/Response
 
 In both the :class:`mediatpy.Request` and the :class:`mediatpy.Response` you can define any number of attributes.
 
+Response
+^^^^^^^^
+
+It's not necessary to explicitly declare a response, you could use any type as the response of your :class:`mediatpy.RequestHandler`.
+
+Command
+^^^^^^^^
+
+If you declare the :class:`mediatpy.RequestHandler` to return `None`, you will get a canonical command.
+
 EndPoint
 --------
 

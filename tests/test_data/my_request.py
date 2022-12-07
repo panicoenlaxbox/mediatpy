@@ -1,5 +1,5 @@
 from mediatpy import Request
-from tests.my_response import MyResponse
+from tests.test_data.my_response import MyResponse
 
 
 class MyRequest(Request[MyResponse]):

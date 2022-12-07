@@ -4,7 +4,7 @@ Welcome to mediatpy's documentation!
 This library is a port of `Mediatr <https://github.com/jbogard/MediatR>`_ in Python.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    getting_started
    repr
