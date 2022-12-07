@@ -3,6 +3,12 @@ Dependency injection
 
 :class:`mediatpy.Mediator` class does not know anything about third-party dependency containers, but for easing its integration with them, it supplies optional parameters in its constructor that you can use to create (or maybe delegate) objects when they are needed.
 
+The available callbacks are:
+
+- `request_handler_factory`
+- `pipeline_behavior_factory`
+- `notification_handler_factory`
+
 .. code-block:: python
 
     import asyncio

@@ -24,6 +24,7 @@ Example
     from mediatpy import Request, RequestHandler, Mediator
 
 
+    # This type is optional, you could directly use any type as TResponse
     class MyResponse:
         pass
 
