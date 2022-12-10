@@ -39,7 +39,7 @@ exclude_lines = ["pass"]
 
 [tool.poetry]
 name = "mediatpy"
-version = "0.2.0"
+version = "0.2.1"
 description = "Mediator implementation in Python"
 authors = ["Sergio León <panicoenlaxbox@gmail.com>"]
 readme = "README.md"

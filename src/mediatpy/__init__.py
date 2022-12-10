@@ -123,16 +123,16 @@ class Mediator:
         | None = None,
         raise_error_if_not_any_registered_notification_handler: bool = False,
     ) -> None:
-        self._request_handler_factory = (
+        self.request_handler_factory = (
             self._default_request_handler_factory if request_handler_factory is None else request_handler_factory
         )
         self._request_handlers: dict[Type[Request], Type[RequestHandler]] = {}
-        self._pipeline_behavior_factory = (
+        self.pipeline_behavior_factory = (
             self._default_pipeline_behavior_factory if pipeline_behavior_factory is None else pipeline_behavior_factory
         )
         self._pipeline_behaviors: dict[Type[Request], list[_PipelineBehaviorRegistration]] = {}
         self._pipeline_behavior_position = 0
-        self._notification_handler_factory = (
+        self.notification_handler_factory = (
             self._default_notification_handler_factory
             if notification_handler_factory is None
             else notification_handler_factory
@@ -257,15 +257,15 @@ class Mediator:
             await (await self._create_notification_handler(notification_handler)).handle(notification)
 
     async def _create_request_handler(self, request_handler: Type[RequestHandler]) -> RequestHandler:
-        return await self._request_handler_factory(request_handler)
+        return await self.request_handler_factory(request_handler)
 
     async def _create_pipeline_behavior(self, pipeline_behavior: Type[PipelineBehavior]) -> PipelineBehavior:
-        return await self._pipeline_behavior_factory(pipeline_behavior)
+        return await self.pipeline_behavior_factory(pipeline_behavior)
 
     async def _create_notification_handler(
         self, notification_handler: Type[NotificationHandler]
     ) -> NotificationHandler:
-        return await self._notification_handler_factory(notification_handler)
+        return await self.notification_handler_factory(notification_handler)
 
     @cache
     def _resolve_pipeline_behaviors(self, request: Request) -> list[_PipelineBehaviorRegistration]:
