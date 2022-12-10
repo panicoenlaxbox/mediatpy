@@ -21,7 +21,7 @@ The available callbacks are:
         pass
 
 
-    def my_custom_notification_handler_factory(notification_handler: Type[NotificationHandler]) -> NotificationHandler:
+    async def my_custom_notification_handler_factory(notification_handler: Type[NotificationHandler]) -> NotificationHandler:
         # Here you could delegate to the container or do anything else to create the requested object
         return notification_handler()
 

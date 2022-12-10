@@ -2,7 +2,7 @@ import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from functools import cache
-from typing import Awaitable, Callable, Coroutine, Generic, Optional, Type, TypeAlias, TypeVar, get_args
+from typing import Awaitable, Callable, Generic, Type, TypeAlias, TypeVar, get_args
 
 # https://docs.python.org/3/howto/logging.html#library-config
 _logger = logging.getLogger(__name__)
@@ -117,9 +117,10 @@ class Mediator:
 
     def __init__(
         self,
-        request_handler_factory: Optional[Callable[[Type[RequestHandler]], RequestHandler]] = None,
-        pipeline_behavior_factory: Optional[Callable[[Type[PipelineBehavior]], PipelineBehavior]] = None,
-        notification_handler_factory: Optional[Callable[[Type[NotificationHandler]], NotificationHandler]] = None,
+        request_handler_factory: Callable[[Type[RequestHandler]], Awaitable[RequestHandler]] | None = None,
+        pipeline_behavior_factory: Callable[[Type[PipelineBehavior]], Awaitable[PipelineBehavior]] | None = None,
+        notification_handler_factory: Callable[[Type[NotificationHandler]], Awaitable[NotificationHandler]]
+        | None = None,
         raise_error_if_not_any_registered_notification_handler: bool = False,
     ) -> None:
         self._request_handler_factory = (
@@ -142,15 +143,17 @@ class Mediator:
         )
 
     @staticmethod
-    def _default_request_handler_factory(request_handler: Type[RequestHandler]) -> RequestHandler:
+    async def _default_request_handler_factory(request_handler: Type[RequestHandler]) -> RequestHandler:
         return request_handler()
 
     @staticmethod
-    def _default_pipeline_behavior_factory(pipeline_behavior: Type[PipelineBehavior]) -> PipelineBehavior:
+    async def _default_pipeline_behavior_factory(pipeline_behavior: Type[PipelineBehavior]) -> PipelineBehavior:
         return pipeline_behavior()
 
     @staticmethod
-    def _default_notification_handler_factory(notification_handler: Type[NotificationHandler]) -> NotificationHandler:
+    async def _default_notification_handler_factory(
+        notification_handler: Type[NotificationHandler],
+    ) -> NotificationHandler:
         return notification_handler()
 
     @staticmethod
@@ -228,14 +231,12 @@ class Mediator:
         _logger.debug(f"Sending request {request}")
         if not type(request) in self._request_handlers:
             raise NoRequestHandlerFoundError(request)
-        request_handler = self._create_request_handler(self._request_handlers[type(request)])
+        request_handler = await self._create_request_handler(self._request_handlers[type(request)])
         pipeline_behaviors = self._resolve_pipeline_behaviors(request)
         if not any(pipeline_behaviors):
             return await request_handler.handle(request)
-        first_pipeline_behavior = self._create_pipeline_behavior(pipeline_behaviors[0].pipeline_behavior)
-        next_pipeline_behavior: Callable[..., Awaitable[TResponse]] = self._get_next_pipeline_behavior(
-            request, request_handler, pipeline_behaviors, 0
-        )
+        first_pipeline_behavior = await self._create_pipeline_behavior(pipeline_behaviors[0].pipeline_behavior)
+        next_pipeline_behavior = self._get_next_pipeline_behavior(request, request_handler, pipeline_behaviors, 0)
         return await first_pipeline_behavior.handle(request, next_pipeline_behavior)
 
     async def publish(self, notification: Notification) -> None:
@@ -253,16 +254,18 @@ class Mediator:
             raise NotAnyNotificationHandlerFoundError(notification)
 
         for notification_handler in notification_handlers:
-            await self._create_notification_handler(notification_handler).handle(notification)
+            await (await self._create_notification_handler(notification_handler)).handle(notification)
 
-    def _create_request_handler(self, request_handler: Type[RequestHandler]) -> RequestHandler:
-        return self._request_handler_factory(request_handler)
+    async def _create_request_handler(self, request_handler: Type[RequestHandler]) -> RequestHandler:
+        return await self._request_handler_factory(request_handler)
 
-    def _create_pipeline_behavior(self, pipeline_behavior: Type[PipelineBehavior]) -> PipelineBehavior:
-        return self._pipeline_behavior_factory(pipeline_behavior)
+    async def _create_pipeline_behavior(self, pipeline_behavior: Type[PipelineBehavior]) -> PipelineBehavior:
+        return await self._pipeline_behavior_factory(pipeline_behavior)
 
-    def _create_notification_handler(self, notification_handler: Type[NotificationHandler]) -> NotificationHandler:
-        return self._notification_handler_factory(notification_handler)
+    async def _create_notification_handler(
+        self, notification_handler: Type[NotificationHandler]
+    ) -> NotificationHandler:
+        return await self._notification_handler_factory(notification_handler)
 
     @cache
     def _resolve_pipeline_behaviors(self, request: Request) -> list[_PipelineBehaviorRegistration]:
@@ -282,14 +285,16 @@ class Mediator:
         pipeline_behaviors: list[_PipelineBehaviorRegistration],
         index: int,
     ) -> Callable[..., Awaitable[TResponse]]:
-        def _() -> Coroutine:
+        async def _() -> TResponse:
             next_index = index + 1
             is_last_pipeline_behavior = next_index == len(pipeline_behaviors)
             if is_last_pipeline_behavior:
-                return request_handler.handle(request)
+                return await request_handler.handle(request)
             else:
-                next_pipeline_behavior = pipeline_behaviors[next_index]
-                return self._create_pipeline_behavior(next_pipeline_behavior.pipeline_behavior).handle(
+                next_pipeline_behavior = await self._create_pipeline_behavior(
+                    pipeline_behaviors[next_index].pipeline_behavior
+                )
+                return await next_pipeline_behavior.handle(
                     request, self._get_next_pipeline_behavior(request, request_handler, pipeline_behaviors, next_index)
                 )
 

@@ -1,5 +1,5 @@
-from typing import Awaitable, Callable
-from unittest.mock import MagicMock
+from typing import Awaitable, Callable, Type
+from unittest.mock import AsyncMock
 
 import pytest
 from assertpy import assert_that
@@ -136,7 +136,10 @@ async def test_when_a_notification_is_sent_then_notification_handlers_are_execut
 
 
 async def test_when_a_custom_request_handler_factory_is_supplied_then_is_used() -> None:
-    mock_custom_request_handler_factory = MagicMock(return_value=MyRequestHandler())
+    async def _custom_request_handler_factory(request_handler: Type[RequestHandler]) -> RequestHandler:
+        return MyRequestHandler()
+
+    mock_custom_request_handler_factory = AsyncMock(wraps=_custom_request_handler_factory)
     mediator = create_mediator(request_handler_factory=mock_custom_request_handler_factory)
     mediator.register_request_handler(MyRequestHandler)
     request = MyRequest()
@@ -147,7 +150,7 @@ async def test_when_a_custom_request_handler_factory_is_supplied_then_is_used() 
 
 
 async def test_when_a_custom_pipeline_behavior_factory_is_supplied_then_is_used() -> None:
-    mock_custom_pipeline_behavior_factory = MagicMock(return_value=MyPipelineBehavior())
+    mock_custom_pipeline_behavior_factory = AsyncMock(return_value=MyPipelineBehavior())
     mediator = create_mediator(pipeline_behavior_factory=mock_custom_pipeline_behavior_factory)
     mediator.register_request_handler(MyRequestHandler)
     mediator.register_pipeline_behavior(MyPipelineBehavior)
@@ -159,7 +162,7 @@ async def test_when_a_custom_pipeline_behavior_factory_is_supplied_then_is_used(
 
 
 async def test_when_a_custom_notification_handler_factory_is_supplied_then_is_used() -> None:
-    mock_custom_notification_handler_factory = MagicMock(return_value=MyNotificationHandler())
+    mock_custom_notification_handler_factory = AsyncMock(return_value=MyNotificationHandler())
     mediator = create_mediator(notification_handler_factory=mock_custom_notification_handler_factory)
     mediator.register_notification_handler(MyNotificationHandler)
     notification = MyNotification()
