@@ -57,7 +57,7 @@ The easiest way to set up the development environment is by using `pipx` and `po
 
 To install [pipx](https://pipx.pypa.io/en/stable/installation/):
 
-```
+```powershell
 py -m pip install --user pipx
 .\pipx.exe ensurepath
 ```
@@ -70,7 +70,7 @@ pipx install poetry
 
 Now you can clone the repository and navigate to the project root directory and execute the following commands:
 
-```
+```bash
 poetry install
 poetry run pre-commit install
 ```
@@ -81,3 +81,25 @@ Documentation is hosted on [Read the Docs](https://mediatpy.readthedocs.io/en/la
 
 If you want to build the documentation locally, you can do so by installing the dependencies with 
 `pip install -r docs/requirements.txt` and executing `.\make.bat html` from `docs` directory.
+
+# Codex
+
+To facilitate the installation of project dependencies by Codex, a `requirements-codex.txt` file has been generated using the following command:
+
+```bash
+poetry export -f requirements.txt --with dev --without-hashes -o requirements-codex.txt
+```
+
+In order for this command to work, you need to have the `poetry-plugin-export` plugin installed. You can do it by running:
+
+```bash
+poetry self add poetry-plugin-export
+```
+
+## Setup script
+
+Once we have this file available, the Setup script for Codex would be the following:
+
+```bash
+pip install -r requirements-codex.txt
+```
