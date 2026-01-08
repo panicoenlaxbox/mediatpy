@@ -6,6 +6,7 @@ from typing import Awaitable, Callable, Generic, Type, TypeAlias, TypeVar, get_a
 
 # https://docs.python.org/3/howto/logging.html#library-config
 _logger = logging.getLogger(__name__)
+
 _logger.addHandler(logging.NullHandler())
 
 TResponse = TypeVar("TResponse")
