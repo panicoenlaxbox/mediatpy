@@ -72,7 +72,9 @@ async def test_when_a_request_is_sent_then_is_managed_by_a_request_handler() -> 
     assert_that(response.result).is_equal_to("test")
 
 
-async def test_when_register_two_request_handlers_for_the_same_request_then_only_the_last_registered_is_executed() -> None:  # noqa: E501
+async def test_when_register_two_request_handlers_for_the_same_request_then_only_the_last_registered_is_executed() -> (
+    None
+):  # noqa: E501
     mediator = create_mediator()
     mediator.register_request_handler(MyRequestHandler)
     mediator.register_request_handler(OtherRequestHandler)
@@ -94,7 +96,7 @@ async def test_when_a_request_is_sent_with_a_pipeline_behavior_then_behavior_and
     assert_that(response.data["test"]).is_equal_to("test")
 
 
-async def test_when_a_request_is_sent_with_multiple_pipeline_behaviors_then_behaviors_and_request_handler_are_executed_in_right_order() -> None:  # noqa: E501
+async def test_when_a_request_is_sent_with_multiple_pipeline_behaviors_then_behaviors_and_request_handler_are_executed_in_right_order() -> None:  # noqa: E501  # fmt: skip
     mediator = create_mediator()
     mediator.register_request_handler(MyRequestHandler)
     mediator.register_pipeline_behavior(MyPipelineBehavior)
@@ -117,7 +119,7 @@ async def test_when_there_are_no_any_registered_notification_handlers_then_an_er
     assert_that(excinfo.value.notification).is_equal_to(notification)
 
 
-async def test_when_there_are_no_any_registered_notification_handlers_and_raise_error_is_not_configured_then_no_error_is_thrown() -> None:  # noqa: E501
+async def test_when_there_are_no_any_registered_notification_handlers_and_raise_error_is_not_configured_then_no_error_is_thrown() -> None:  # noqa: E501  # fmt: skip
     mediator = create_mediator()
     await mediator.publish(MyNotification())
 

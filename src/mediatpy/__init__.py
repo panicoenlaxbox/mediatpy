@@ -119,8 +119,9 @@ class Mediator:
         self,
         request_handler_factory: Callable[[Type[RequestHandler]], Awaitable[RequestHandler]] | None = None,
         pipeline_behavior_factory: Callable[[Type[PipelineBehavior]], Awaitable[PipelineBehavior]] | None = None,
-        notification_handler_factory: Callable[[Type[NotificationHandler]], Awaitable[NotificationHandler]]
-        | None = None,
+        notification_handler_factory: (
+            Callable[[Type[NotificationHandler]], Awaitable[NotificationHandler]] | None
+        ) = None,
         raise_error_if_not_any_registered_notification_handler: bool = False,
     ) -> None:
         self.request_handler_factory = (

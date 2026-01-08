@@ -11,11 +11,12 @@ class RequestHandlerWithNoUserDefinedClassAsResponse(RequestHandler[MyRequest, l
 
 
 class RequestHandlerWithNoResponse(RequestHandler[MyRequest, None]):
-    async def handle(self, request: MyRequest) -> None:
-        ...
+    async def handle(self, request: MyRequest) -> None: ...
 
 
-async def test_when_a_request_with_no_user_defined_class_as_response_is_sent_then_is_managed_by_a_request_handler() -> None:  # noqa: E501
+async def test_when_a_request_with_no_user_defined_class_as_response_is_sent_then_is_managed_by_a_request_handler() -> (
+    None
+):  # noqa: E501
     mediator = create_mediator()
     mediator.register_request_handler(RequestHandlerWithNoUserDefinedClassAsResponse)
 

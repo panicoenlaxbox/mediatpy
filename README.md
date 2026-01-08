@@ -68,8 +68,9 @@ To install [poetry](https://python-poetry.org/docs/#installation):
 pipx install poetry
 ```
 
-Now you can clone the repository and navigate to the project root directory and execute the following command to install the development dependencies in a new virtual environment:
+Now you can clone the repository and navigate to the project root directory and execute the following commands:
 
 ```
 poetry install
+poetry run pre-commit install
 ```
