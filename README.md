@@ -74,3 +74,10 @@ Now you can clone the repository and navigate to the project root directory and 
 poetry install
 poetry run pre-commit install
 ```
+
+# Documentation
+
+Documentation is hosted on [Read the Docs](https://mediatpy.readthedocs.io/en/latest/) and is built automatically upon each commit to the main branch using the `.readthedocs.yml` file.
+
+If you want to build the documentation locally, you can do so by installing the dependencies with 
+`pip install -r docs/requirements.txt` and executing `.\make.bat html` from `docs` directory.
