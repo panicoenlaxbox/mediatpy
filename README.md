@@ -50,3 +50,26 @@ async def main():
 if __name__ == '__main__':
     asyncio.run(main())
 ```
+
+# Development
+
+The easiest way to set up the development environment is by using `pipx` and `poetry`.
+
+To install [pipx](https://pipx.pypa.io/en/stable/installation/):
+
+```
+py -m pip install --user pipx
+.\pipx.exe ensurepath
+```
+
+To install [poetry](https://python-poetry.org/docs/#installation):
+
+```
+pipx install poetry
+```
+
+Now you can clone the repository and navigate to the project root directory and execute the following command to install the development dependencies in a new virtual environment:
+
+```
+poetry install
+```
