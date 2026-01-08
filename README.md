@@ -84,13 +84,13 @@ If you want to build the documentation locally, you can do so by installing the 
 
 # Codex
 
-To facilitate the installation of project dependencies by Codex, a `requirements-codex.txt` file has been generated using the following command:
+To facilitate the installation of project dependencies by Codex, a [requirements-codex.txt](requirements-codex.txt) file has been generated using the following command:
 
 ```bash
 poetry export -f requirements.txt --with dev --without-hashes -o requirements-codex.txt
 ```
 
-In order for this command to work, you need to have the `poetry-plugin-export` plugin installed. You can do it by running:
+In order for this command to work, you need to have the [poetry-plugin-export](https://pypi.org/project/poetry-plugin-export/) plugin installed. If you don't have it installed yet, you can do so with the following command:
 
 ```bash
 poetry self add poetry-plugin-export
@@ -103,3 +103,5 @@ Once we have this file available, the Setup script for Codex would be the follow
 ```bash
 pip install -r requirements-codex.txt
 ```
+
+> All this is to avoid using `poetry` in the Codex environment, because there are network problems when installing the dependencies. At least, to date 08/01/2026.
